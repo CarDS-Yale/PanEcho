@@ -28,7 +28,7 @@ def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, task
     clip_len = 16
 
     # Load tasks
-    task_dict = pd.read_pickle('https://github.com/gholste/PanEcho/blob/main/content/tasks.pkl?raw=true')
+    task_dict = pd.read_pickle('https://github.com/CarDSLab/PanEcho/blob/main/content/tasks.pkl?raw=true')
     all_tasks = list(task_dict.keys())
     task_list = [Task(t, task_dict[t]['task_type'], task_dict[t]['class_names'], task_dict[t]['mean']) for t in all_tasks]
 
@@ -40,7 +40,7 @@ def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, task
 
     # Load pretrained weights
     if pretrained:
-        weights = torch.hub.load_state_dict_from_url('https://github.com/gholste/PanEcho/releases/download/v1.0/panecho.pt', map_location='cpu', progress=False)['weights']
+        weights = torch.hub.load_state_dict_from_url('https://github.com/CarDSLab/PanEcho/releases/download/v1.0/panecho.pt', map_location='cpu', progress=False)['weights']
         msg = model.load_state_dict(weights, strict=True)
         print(msg)
 
