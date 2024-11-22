@@ -19,7 +19,7 @@ The pretrained model is available with a simple one-line import using `PyTorch`.
 import torch
 
 # Import PanEcho
-model = torch.hub.load('CarDSLab/PanEcho', 'PanEcho', force_reload=True)
+model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True)
 
 # Demo inference on random video input
 x = torch.rand(1, 3, 16, 112, 112)
@@ -36,7 +36,7 @@ If you want to use PanEcho but are only interested in a subset of tasks, you can
 ```
 # Import PanEcho, but remove unwanted task heads
 tasks = ['EF', 'LVSystolicFunction', 'AVStenosis']
-model = torch.hub.load('CarDSLab/PanEcho', 'PanEcho', force_reload=True, tasks=tasks)
+model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True, tasks=tasks)
 
 # Demo inference on random video input
 x = torch.rand(1, 3, 16, 112, 112)
@@ -49,10 +49,8 @@ To fine-tune PanEcho on your own data, we provide two options:
 
 #### 1) For video-based (3D) modeling, use the entire pretrained PanEcho backbone as follows:
 ```
-import torch
-
 # Import PanEcho backbone w/o task-specific output heads
-model = torch.hub.load('CarDSLab/PanEcho', 'PanEcho', force_reload=True, backbone_only=True)
+model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True, backbone_only=True)
 
 # Demo inference on random video input
 x = torch.rand(1, 3, 16, 112, 112)
@@ -65,10 +63,8 @@ print(model(x))  # (1, 768) video embedding
 
 #### 2) For image-based (2D) modeling, use the pretrained image encoder of PanEcho as follows:
 ```
-import torch
-
 # Import PanEcho image encoder w/o temporal Transformer or task-specific output heads
-model = torch.hub.load('CarDSLab/PanEcho', 'PanEcho', force_reload=True, image_encoder_only=True)
+model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True, image_encoder_only=True)
 
 # Demo inference on random image input
 x = torch.rand(1, 3, 112, 112)
