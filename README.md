@@ -131,7 +131,8 @@ Holste, Gregory, et al. "PanEcho: Complete AI-enabled echocardiography interpret
 ```
 
 BibTeX:
-```@article{holste2024panecho,
+```
+@article{holste2024panecho,
   title={PanEcho: Complete AI-enabled echocardiography interpretation with multi-task deep learning},
   author={Holste, Gregory and Oikonomou, Evangelos K and Wang, Zhangyang and Khera, Rohan},
   journal={medRxiv},
