@@ -15,7 +15,7 @@ class Task():
         self.class_indices = np.arange(class_names.size)
         self.mean = mean
 
-def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, tasks='all', activations=True):
+def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, tasks='all', activations=True, clip_len=16):
     assert not (image_encoder_only and backbone_only), 'image_encoder_only and backbone_only cannot both be True'
 
     # PanEcho architecture specifications
@@ -25,7 +25,6 @@ def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, task
     n_heads = 8
     pooling = 'mean'
     transformer_dropout = 0.
-    clip_len = 16
 
     # Load tasks
     task_dict = pd.read_pickle('https://github.com/CarDS-Yale/PanEcho/blob/main/content/tasks.pkl?raw=true')
@@ -41,8 +40,8 @@ def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, task
     # Load pretrained weights
     if pretrained:
         weights = torch.hub.load_state_dict_from_url('https://github.com/CarDS-Yale/PanEcho/releases/download/v1.0/panecho.pt', map_location='cpu', progress=False)['weights']
-        msg = model.load_state_dict(weights, strict=True)
-        print(msg)
+        del weights['encoder.time_encoder.pe']  # allow for variable clip_len (fixed positional encoding does not need to be loaded from PanEcho)
+        msg = model.load_state_dict(weights, strict=False)
 
     # Subset for desired tasks
     if tasks != 'all':

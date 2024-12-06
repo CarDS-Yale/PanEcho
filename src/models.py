@@ -2,7 +2,6 @@ import math
 
 import timm
 import torch
-import torch.nn.functional as F
 import torchvision
 
 class PositionalEncoding(torch.nn.Module):
@@ -98,8 +97,8 @@ class FrameTransformer(torch.nn.Module):
     def forward(self, x):
         b, c, l, h, w = x.shape
 
-        # x: batch_size x 3 x clip_len x 112 x 112
-        x = x.reshape(b*l, c, h, w)  # batch_size*clip_len x 3 x 112 x 112
+        # x: batch_size x 3 x clip_len x h x w
+        x = x.reshape(b*l, c, h, w)  # batch_size*clip_len x 3 x h x w
 
         embeddings = self.encoder(x)
 
@@ -156,11 +155,11 @@ class MultiTaskModel(torch.nn.Module):
                 if task.task_type == 'binary_classification':
                     # Ensure that output corresponds to "positive" class for all binary classification tasks
                     if task.task_name in ['MVStenosis', 'AVStructure', 'RASize', 'RVSystolicFunction', 'LVWallThickness-increased-modsev', 'LVWallThickness-increased-any', 'pericardial-effusion']:
-                        out_dict[task.task_name] = 1-F.sigmoid(out)
+                        out_dict[task.task_name] = 1-torch.sigmoid(out)
                     else:
-                        out_dict[task.task_name] = F.sigmoid(out)
+                        out_dict[task.task_name] = torch.sigmoid(out)
                 elif task.task_type == 'multi-class_classification':
-                    out_dict[task.task_name] = F.softmax(out, dim=1)
+                    out_dict[task.task_name] = torch.softmax(out, dim=1)
                 else:
                     out_dict[task.task_name] = out
             else:
