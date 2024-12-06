@@ -30,6 +30,22 @@ print(model(x))
 
 `Output`: Dictionary whose keys are the tasks (**see [here](https://github.com/CarDS-Yale/PanEcho/blob/main/content/tasks.md) for breakdown of all tasks**) and values are the predictions. The model outputs class-wise probabilities for classification tasks and direct estimates for regression tasks.
 
+### Setting Video Length
+
+If you want to run inference on video clips of more or less than 16 frames, you can control this through the `clip_len` argument:
+```
+import torch
+
+# Import PanEcho
+model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True, clip_len=32)
+
+# Demo inference on random 32-frame video input
+x = torch.rand(1, 3, 32, 224, 224)
+print(model(x))
+```
+
+We recommend using 16-frame video clips when using PanEcho directly for inference in accordance with how the model was trained and evaluated. However, feel free to experiment with video length, particularly if you are fine-tuning PanEcho on your own data (see "Transfer Learning" below).
+
 ### Subsetting Task Heads
 
 If you want to use PanEcho but are only interested in a subset of tasks, you can easily select your tasks of interest as follows. *Note*: Be sure to consult [this table](https://github.com/CarDS-Yale/PanEcho/blob/main/content/tasks.md) to select the desired task names.
