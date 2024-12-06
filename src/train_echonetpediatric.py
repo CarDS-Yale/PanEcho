@@ -79,6 +79,9 @@ def main(args):
             if os.path.isdir(model_dir):
                 shutil.rmtree(model_dir)
             os.mkdir(model_dir)
+            os.mkdir(os.path.join(model_dir, 'history_plots'))
+            os.mkdir(os.path.join(model_dir, 'results_plots'))
+            os.mkdir(os.path.join(model_dir, 'preds'))
 
     # Set all seeds for reproducibility
     set_seed(args.seed)
@@ -310,6 +313,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--clip_len', type=int, default=16)
     parser.add_argument('--num_clips', type=int, default=4)
+    parser.add_argument('--sampling_rate', type=int, default=1)
     parser.add_argument('--normalization', type=str, default='', choices=['', 'imagenet', 'kinetics'])
     parser.add_argument('--augment', action='store_true', default=False)
 
