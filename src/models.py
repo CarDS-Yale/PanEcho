@@ -148,6 +148,10 @@ class MultiTaskModel(torch.nn.Module):
 
         out_dict = {}
         for task in self.tasks:
-            out_dict[task.task_name] = self.get_submodule(task.task_name+'_head')(x)
+            # Ensure that output corresponds to "positive" class for all binary classification tasks
+            if task.task_name in ['MVStenosis', 'AVStructure', 'RASize', 'RVSystolicFunction', 'LVWallThickness-increased-modsev', 'LVWallThickness-increased-any', 'pericardial-effusion']:
+                out_dict[task.task_name] = 1-self.get_submodule(task.task_name+'_head')(x)
+            else:
+                out_dict[task.task_name] = self.get_submodule(task.task_name+'_head')(x)
 
         return out_dict
