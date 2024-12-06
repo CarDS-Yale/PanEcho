@@ -153,13 +153,13 @@ class MultiTaskModel(torch.nn.Module):
             out = self.get_submodule(task.task_name+'_head')(x)
 
             if self.activations:
-                if task.task_name == 'binary_classification':
+                if task.task_type == 'binary_classification':
                     # Ensure that output corresponds to "positive" class for all binary classification tasks
                     if task.task_name in ['MVStenosis', 'AVStructure', 'RASize', 'RVSystolicFunction', 'LVWallThickness-increased-modsev', 'LVWallThickness-increased-any', 'pericardial-effusion']:
                         out_dict[task.task_name] = 1-F.sigmoid(out)
                     else:
                         out_dict[task.task_name] = F.sigmoid(out)
-                elif task.task_name == 'multi-class_classification':
+                elif task.task_type == 'multi-class_classification':
                     out_dict[task.task_name] = F.softmax(out, dim=1)
                 else:
                     out_dict[task.task_name] = out
