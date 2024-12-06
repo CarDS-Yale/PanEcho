@@ -22,11 +22,11 @@ import torch
 model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True)
 
 # Demo inference on random video input
-x = torch.rand(1, 3, 16, 112, 112)
+x = torch.rand(1, 3, 16, 224, 224)
 print(model(x))
 ```
 
-`Input`: PyTorch Tensor of shape `(batch_size, 3, 16, 112, 112)` containing a 16-frame echocardiogram video clip at 112 x 112 resolution that has been ImageNet-normalized. See our [data loader](https://github.com/CarDS-Yale/PanEcho/blob/34f611db51fd78f6bb1f7a6ef7ab59736afda1d2/src/dataset.py#L389) for implementation details, though you are free to preprocess however you like.
+`Input`: PyTorch Tensor of shape `(batch_size, 3, 16, 224, 224)` containing a 16-frame echocardiogram video clip at 224 x 224 resolution that has been ImageNet-normalized. See our [data loader](https://github.com/CarDS-Yale/PanEcho/blob/34f611db51fd78f6bb1f7a6ef7ab59736afda1d2/src/dataset.py#L389) for implementation details, though you are free to preprocess however you like.
 
 `Output`: Dictionary whose keys are the tasks (**see [here](https://github.com/CarDS-Yale/PanEcho/blob/main/content/tasks.md) for breakdown of all tasks**) and values are the predictions. Note that binary classification tasks will need a sigmoid activation applied, and multi-class classification tasks will need a softmax activation applied.
 
@@ -39,7 +39,7 @@ tasks = ['EF', 'LVSystolicFunction', 'AVStenosis']
 model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True, tasks=tasks)
 
 # Demo inference on random video input
-x = torch.rand(1, 3, 16, 112, 112)
+x = torch.rand(1, 3, 16, 224, 224)
 print(model(x))  # predictions only for EF, LVSystolicFunction, & AVStenosis
 ```
 
@@ -53,11 +53,11 @@ To fine-tune PanEcho on your own data, we provide two options:
 model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True, backbone_only=True)
 
 # Demo inference on random video input
-x = torch.rand(1, 3, 16, 112, 112)
+x = torch.rand(1, 3, 16, 224, 224)
 print(model(x))  # (1, 768) video embedding
 ```
 
-`Input`: PyTorch Tensor of shape `(batch_size, 3, 16, 112, 112)` containing a 16-frame echocardiogram video clip, as described earlier.
+`Input`: PyTorch Tensor of shape `(batch_size, 3, 16, 224, 224)` containing a 16-frame echocardiogram video clip, as described earlier.
 
 `Output`: PyTorch Tensor of shape `(batch_size, 768)` containing an embedding (learned representation) of the video.
 
@@ -67,11 +67,11 @@ print(model(x))  # (1, 768) video embedding
 model = torch.hub.load('CarDS-Yale/PanEcho', 'PanEcho', force_reload=True, image_encoder_only=True)
 
 # Demo inference on random image input
-x = torch.rand(1, 3, 112, 112)
+x = torch.rand(1, 3, 224, 224)
 print(model(x))  # (1, 768) image embedding
 ```
 
-`Input`: PyTorch Tensor of shape `(batch_size, 3, 112, 112)` containing an echocardiogram image (one video frame).
+`Input`: PyTorch Tensor of shape `(batch_size, 3, 224, 224)` containing an echocardiogram image (one video frame).
 
 `Output`: PyTorch Tensor of shape `(batch_size, 768)` containing an embedding (learned representation) of the image.
 
