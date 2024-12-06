@@ -2,6 +2,7 @@ import math
 
 import timm
 import torch
+import torch.nn.functional as F
 import torchvision
 
 class PositionalEncoding(torch.nn.Module):
@@ -124,10 +125,11 @@ class FrameTransformer(torch.nn.Module):
 
 class MultiTaskModel(torch.nn.Module):
     """Multi-task model based on given encoder and task list."""
-    def __init__(self, encoder, encoder_dim, tasks, fc_dropout=0):
+    def __init__(self, encoder, encoder_dim, tasks, fc_dropout=0, activations=True):
         super().__init__()
         self.encoder = encoder
         self.tasks = tasks
+        self.activations = activations
 
         for task in self.tasks:
             if task.task_type == 'multi-class_classification':
@@ -148,10 +150,20 @@ class MultiTaskModel(torch.nn.Module):
 
         out_dict = {}
         for task in self.tasks:
-            # Ensure that output corresponds to "positive" class for all binary classification tasks
-            if task.task_name in ['MVStenosis', 'AVStructure', 'RASize', 'RVSystolicFunction', 'LVWallThickness-increased-modsev', 'LVWallThickness-increased-any', 'pericardial-effusion']:
-                out_dict[task.task_name] = 1-self.get_submodule(task.task_name+'_head')(x)
+            out = self.get_submodule(task.task_name+'_head')(x)
+
+            if self.activations:
+                if task.task_name == 'binary_classification':
+                    # Ensure that output corresponds to "positive" class for all binary classification tasks
+                    if task.task_name in ['MVStenosis', 'AVStructure', 'RASize', 'RVSystolicFunction', 'LVWallThickness-increased-modsev', 'LVWallThickness-increased-any', 'pericardial-effusion']:
+                        out_dict[task.task_name] = 1-F.sigmoid(out)
+                    else:
+                        out_dict[task.task_name] = F.sigmoid(out)
+                elif task.task_name == 'multi-class_classification':
+                    out_dict[task.task_name] = F.softmax(out, dim=1)
+                else:
+                    out_dict[task.task_name] = out
             else:
-                out_dict[task.task_name] = self.get_submodule(task.task_name+'_head')(x)
+                out_dict[task.task_name] = out
 
         return out_dict

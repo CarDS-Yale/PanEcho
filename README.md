@@ -28,7 +28,7 @@ print(model(x))
 
 `Input`: PyTorch Tensor of shape `(batch_size, 3, 16, 224, 224)` containing a 16-frame echocardiogram video clip at 224 x 224 resolution that has been ImageNet-normalized. See our [data loader](https://github.com/CarDS-Yale/PanEcho/blob/34f611db51fd78f6bb1f7a6ef7ab59736afda1d2/src/dataset.py#L389) for implementation details, though you are free to preprocess however you like.
 
-`Output`: Dictionary whose keys are the tasks (**see [here](https://github.com/CarDS-Yale/PanEcho/blob/main/content/tasks.md) for breakdown of all tasks**) and values are the predictions. Note that binary classification tasks will need a sigmoid activation applied, and multi-class classification tasks will need a softmax activation applied.
+`Output`: Dictionary whose keys are the tasks (**see [here](https://github.com/CarDS-Yale/PanEcho/blob/main/content/tasks.md) for breakdown of all tasks**) and values are the predictions. The model outputs class-wise probabilities for classification tasks and direct estimates for regression tasks.
 
 ### Subsetting Task Heads
 

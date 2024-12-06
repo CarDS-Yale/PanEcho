@@ -15,7 +15,7 @@ class Task():
         self.class_indices = np.arange(class_names.size)
         self.mean = mean
 
-def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, tasks='all'):
+def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, tasks='all', activations=True):
     assert not (image_encoder_only and backbone_only), 'image_encoder_only and backbone_only cannot both be True'
 
     # PanEcho architecture specifications
@@ -36,7 +36,7 @@ def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, task
     encoder = FrameTransformer(arch, n_heads, n_layers, transformer_dropout, pooling, clip_len)
     encoder_dim = encoder.encoder.n_features
 
-    model = MultiTaskModel(encoder, encoder_dim, task_list, 0.25)
+    model = MultiTaskModel(encoder, encoder_dim, task_list, 0.25, activations)
 
     # Load pretrained weights
     if pretrained:
