@@ -1,8 +1,10 @@
-# PanEcho: Complete AI-enabled echocardiography interpretation with multi-task deep learning
+# Complete AI-Enabled Echocardiography Interpretation with Multitask Deep Learning
 
-*[**Gregory Holste**](https://gholste.me), Evangelos K. Oikonomou, Zhangyang Wang, [**Rohan Khera**](https://www.cards-lab.org/rohan-khera)*
+*[Gregory Holste](https://gholste.me), Evangelos K. Oikonomou, Márton Tokodi, Attila Kovács, Zhangyang Wang, [Rohan Khera](https://www.cards-lab.org/rohan-khera)*
 
-[[`Preprint`](https://www.medrxiv.org/content/10.1101/2024.11.16.24317431v1)] [[`Project Page`](https://www.cards-lab.org/panecho)]
+**JAMA** (June 23, 2025)
+
+[[`Paper`](https://jamanetwork.com/journals/jama/fullarticle/2835630?guestAccessKey=27a79d8c-caca-4f4a-ad10-70c202cdfe4e&utm_source=twitter&utm_medium=social_jama&utm_term=17313965533&utm_campaign=article_alert&linkId=833098185)] [[`Preprint`](https://www.medrxiv.org/content/10.1101/2024.11.16.24317431v2)] [[`Project Page`](https://www.cards-lab.org/panecho)]
 
 -----
 
@@ -143,18 +145,20 @@ torchrun --nproc_per_node=8 train_echonetdynamic.py --output_dir echonetdynamic_
 
 MLA:
 ```
-Holste, Gregory, et al. "PanEcho: Complete AI-enabled echocardiography interpretation with multi-task deep learning." medRxiv (2024): 2024-11.
+Holste, Gregory, et al. "Complete AI-Enabled Echocardiography Interpretation With Multitask Deep Learning." JAMA, 2025, p. 2025.8731.
 ```
 
 BibTeX:
 ```
-@article{holste2024panecho,
-  title={PanEcho: Complete AI-enabled echocardiography interpretation with multi-task deep learning},
-  author={Holste, Gregory and Oikonomou, Evangelos K and Wang, Zhangyang and Khera, Rohan},
-  journal={medRxiv},
-  pages={2024--11},
-  year={2024},
-  publisher={Cold Spring Harbor Laboratory Press}
+@article{holste2025complete,
+    author = {Holste, Gregory and Oikonomou, Evangelos K. and Tokodi, Márton and Kovács, Attila and Wang, Zhangyang and Khera, Rohan},
+    title = {Complete AI-Enabled Echocardiography Interpretation With Multitask Deep Learning},
+    journal = {JAMA},
+    year = {2025},
+    month = {06},
+    issn = {0098-7484},
+    doi = {10.1001/jama.2025.8731},
+    url = {https://doi.org/10.1001/jama.2025.8731},
 }
 ```
 
