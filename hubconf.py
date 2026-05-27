@@ -1,5 +1,6 @@
 dependencies = ['torch', 'numpy', 'pandas']
 
+import os
 import numpy as np
 import pandas as pd
 import torch
@@ -27,7 +28,7 @@ def PanEcho(pretrained=True, image_encoder_only=False, backbone_only=False, task
     transformer_dropout = 0.
 
     # Load tasks
-    task_dict = pd.read_pickle('https://github.com/CarDS-Yale/PanEcho/blob/main/content/tasks.pkl?raw=true')
+    task_dict = pd.read_pickle(os.path.join(os.path.dirname(__file__), 'content', 'tasks.pkl'))
     all_tasks = list(task_dict.keys())
     task_list = [Task(t, task_dict[t]['task_type'], task_dict[t]['class_names'], task_dict[t]['mean']) for t in all_tasks]
 
